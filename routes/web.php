@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CrudController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,4 +16,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::controller(CrudController::class)->group(function(){
+    Route::get('productos', 'index')->name('productos.index');
+    Route::get('agregar-producto', 'create')->name('productos.create');
+    Route::get('mostrar-producto/{producto}', 'show')->name('productos.show');
 });
