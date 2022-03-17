@@ -36,7 +36,17 @@ class CrudController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+            'price' => 'required'
+        ]);
+        $producto = new Product();
+        $producto->name = $request->name;
+        $producto->description = $request->description;
+        $producto->price = $request->price;
+        $producto->save();
+        return redirect()->route('productos.index');
     }
 
     /**

@@ -19,7 +19,8 @@ Route::get('/', function () {
 });
 
 Route::controller(CrudController::class)->group(function(){
-    Route::get('productos', 'index')->name('productos.index');
+    Route::get('productos-totales', 'index')->name('productos.index');
     Route::get('agregar-producto', 'create')->name('productos.create');
     Route::get('mostrar-producto/{producto}', 'show')->name('productos.show');
+    Route::post('productos-formulario', 'store')->name('producto.store');
 });
