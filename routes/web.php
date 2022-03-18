@@ -18,12 +18,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::controller(CrudController::class)->group(function(){
-    Route::get('productos-totales', 'index')->name('productos.index');
-    Route::get('agregar-producto', 'create')->name('productos.create');
-    Route::get('mostrar-producto/{producto}', 'show')->name('productos.show');
-    Route::get('editar-producto/{producto}', 'edit')->name('productos.edit');
-    Route::post('productos-formulario', 'store')->name('productos.store');
-    Route::put('actualizar-producto/{producto}', 'update')->name('productos.update');
-    Route::delete('eliminar-producto/{producto}', 'destroy')->name('productos.destroy');
-});
+Route::resource('productos', CrudController::class);
