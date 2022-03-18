@@ -25,7 +25,7 @@
             <td>{{$producto -> description}}</td>
             <td>{{$producto -> price}}</td>
             <td>
-                <a href="{{route('productos.show', $producto->id)}}">Ver detalle</a>
+                <a href="{{route('productos.show', $producto->id)}}">Ver detalle</a><br>
             </td>
         </tr>
         @endforeach

@@ -4,18 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    
-    <title>Agregar productos</title>
+    <title>Actualizar productos</title>
 </head>
 <body>
-    <h1>Create</h1>
+    <h1>Edit</h1>
     <a href="{{route('productos.index')}}">Volver a la página principal</a><br>
-    <form action="{{route('productos.store')}}" method="POST">
+    <form action="{{route('productos.update', $producto)}}" method="POST">
         @csrf
+        @method('put')
         <label>
             Producto:
             <br>
-            <input type="text" name="name" value="{{old('name')}}">
+            <input type="text" name="name" value="{{old('name', $producto->name)}}">
             <br>
         </label>
         @error('name')
@@ -26,7 +26,7 @@
         <label>
             Descripción:
             <br>
-            <textarea name="description" rows="10">{{old('description')}}</textarea>
+            <textarea name="description" rows="10">{{old('description', $producto->description)}}</textarea>
             <br>
         </label>
         @error('description')
@@ -37,7 +37,7 @@
         <label>
             Precio:
             <br>
-            <input type="number" name="price" value="{{old('price')}}">
+            <input type="number" name="price" value="{{old('price', $producto->price)}}">
             <br>
         </label>
         @error('price')
@@ -46,7 +46,7 @@
             <br>
         @enderror
         <br>
-        <button type="submit">Enviar información</button>
+        <button type="submit">Actualizar información</button>
     </form>
 </body>
 </html>

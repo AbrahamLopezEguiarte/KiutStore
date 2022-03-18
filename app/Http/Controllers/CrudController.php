@@ -41,12 +41,8 @@ class CrudController extends Controller
             'description' => 'required',
             'price' => 'required'
         ]);
-        $producto = new Product();
-        $producto->name = $request->name;
-        $producto->description = $request->description;
-        $producto->price = $request->price;
-        $producto->save();
-        return redirect()->route('productos.index');
+        $producto = Product::create($request->all());
+        return redirect()->route('productos.show', $producto);
     }
 
     /**
@@ -55,9 +51,8 @@ class CrudController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Product $producto)
     {
-        $producto = Product::find($id);
         return view('productos.show', compact('producto'));
     }
 
@@ -67,9 +62,9 @@ class CrudController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Product $producto)
     {
-        //
+        return view('productos.edit', compact('producto'));
     }
 
     /**
@@ -79,9 +74,15 @@ class CrudController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Product $producto)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+            'price' => 'required'
+        ]);
+        $producto->update($request->all());
+        return redirect()->route('productos.show', $producto);
     }
 
     /**
@@ -90,8 +91,9 @@ class CrudController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Product $producto)
     {
-        //
+        $producto->delete();
+        return redirect()->route('productos.index');
     }
 }
