@@ -19,3 +19,6 @@ Route::get('/', function () {
 });
 
 Route::resource('productos', CrudController::class);
+Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+    return view('dashboard');
+})->name('dashboard');
