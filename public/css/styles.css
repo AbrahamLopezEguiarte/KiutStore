@@ -1,25 +1,7 @@
-* {
-    background-color: white;
-}
-
 body {
     margin: 5px;
 }
 
-header{
-    text-align: center;
-}
-
 h2 {
-    font-size: large;
-}
-
-table, th, td{
-    border: 3px solid #031926;
-    border-collapse: collapse;
-    padding: 5px 30px;
-}
-
-table{
-    margin: auto;
+    font-size: 60px;
 }

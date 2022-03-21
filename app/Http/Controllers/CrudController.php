@@ -93,9 +93,31 @@ class CrudController extends Controller
         $request->validate([
             'name' => 'required',
             'description' => 'required',
-            'price' => 'required'
+            'price' => 'required',
+            'category' => 'required',
+            'image' => 'image'
         ]);
-        $producto->update($request->all());
+        
+        $img = $producto->image;
+
+        $producto = new Product();
+        $producto->name = $request->name;
+        $producto->description = $request->description;
+        $producto->price = $request->price;
+        $producto->category = $request->category;
+
+        if($request->image) {
+            $imagenes = $request->image->store('public/img/product');
+            $url = Storage::url($imagenes);
+            $producto->image = $url;
+        }
+
+        else {
+            $producto->image = $img;
+        }
+
+        $producto->save();
+
         return redirect()->route('productos.show', $producto);
     }
 

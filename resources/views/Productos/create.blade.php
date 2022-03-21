@@ -12,13 +12,13 @@
     
     <title>Agregar productos</title>
 </head>
-<body>
+<body class="mx-5 my-3">
     <h2 class="text-center mt-2">Create</h2>
     
     <div class="mx-auto card" style="width: 1000px">
 
         <div class="card-body">
-            <a href="{{route('productos.index')}}" class="ml-6">Volver a la página principal</a><br>
+            <a href="{{route('productos.index')}}" class="ml-6 badge badge-pill badge-light mb-2">Volver a la página principal</a><br>
             <form class="row g-3" action="{{route('productos.store')}}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="col-md-12 mt-2">
@@ -53,8 +53,8 @@
                     <label for="category" class="form-label">Categoría 
                         <br>
                         <select id="category" name="category" class="form-select">
-                            <option selected>Mochilas</option>
-                            <option>Pañaleras</option>
+                            <option value="Mochilas" selected>Mochilas</option>
+                            <option value="Pañaleras">Pañaleras</option>
                         </select>
                         @error('category')
                             <br>
