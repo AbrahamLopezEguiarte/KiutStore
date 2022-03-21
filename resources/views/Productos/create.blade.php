@@ -4,49 +4,88 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    <!-- Css Styles -->
+    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('css/styles.css')}}">
+    
+    
     <title>Agregar productos</title>
 </head>
 <body>
-    <h1>Create</h1>
-    <a href="{{route('productos.index')}}">Volver a la página principal</a><br>
-    <form action="{{route('productos.store')}}" method="POST">
-        @csrf
-        <label>
-            Producto:
-            <br>
-            <input type="text" name="name" value="{{old('name')}}">
-            <br>
-        </label>
-        @error('name')
-            <small>* {{$message}}</small>
-            <br>
-            <br>
-        @enderror
-        <label>
-            Descripción:
-            <br>
-            <textarea name="description" rows="10">{{old('description')}}</textarea>
-            <br>
-        </label>
-        @error('description')
-            <small>* {{$message}}</small>
-            <br>
-            <br>
-        @enderror
-        <label>
-            Precio:
-            <br>
-            <input type="number" name="price" value="{{old('price')}}">
-            <br>
-        </label>
-        @error('price')
-            <small>* {{$message}}</small>
-            <br>
-            <br>
-        @enderror
-        <br>
-        <button type="submit">Enviar información</button>
-    </form>
+    <h2 class="text-center mt-2">Create</h2>
+    
+    <div class="mx-auto card" style="width: 1000px">
+
+        <div class="card-body">
+            <a href="{{route('productos.index')}}" class="ml-6">Volver a la página principal</a><br>
+            <form class="row g-3" action="{{route('productos.store')}}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="col-md-12 mt-2">
+                    <label for="name" class="form-label">Producto</label>
+                    <input type="text" name="name" value="{{old('name')}}" class="form-control">
+                    @error('name')
+                        <small>* {{$message}}</small>
+                        <br>
+                        <br>
+                    @enderror
+                </div>
+
+                <div class="col-md-12 mt-2">
+                    <label for="description" class="form-label">Descripción</label>
+                    <textarea class="form-control" name="description" rows="10">{{old('description')}} </textarea>
+                    @error('description')
+                        <small>* {{$message}}</small>
+                        <br>
+                        <br>
+                    @enderror
+                </div>
+                <div class="col-6 mt-2">
+                    <label for="price" class="form-label">Precio</label>
+                    <input class="form-control" type="number" name="price" value="{{old('price')}}">
+                    @error('price')
+                        <small>* {{$message}}</small>
+                        <br>
+                        <br>
+                    @enderror
+                </div>
+                <div class="col-md-2 mt-2">
+                    <label for="category" class="form-label">Categoría 
+                        <br>
+                        <select id="category" name="category" class="form-select">
+                            <option selected>Mochilas</option>
+                            <option>Pañaleras</option>
+                        </select>
+                        @error('category')
+                            <br>
+                            <small>* {{$message}}</small>
+                            <br>
+                            <br>
+                        @enderror
+                    </label>
+                </div>
+                <div class="col-4 mt-2">
+                    <label class="form-label" for="image">
+                        Subir imagen
+                        <br>
+                        <input type="file" name="image" id="image" accept="image/*" >
+                        @error('image')
+                            <br>
+                            <small>* {{$message}}</small>
+                            <br>
+                            <br>
+                        @enderror
+                    </label>
+                </div>
+
+                <div class="col-3 mt-5 mx-auto" style="width: 200px;">
+                    <button type="submit" class="btn btn-outline-dark">Enviar información</button>
+                </div>
+            </form>
+        </div>
+        
+    </div>
+         
+
 </body>
 </html>

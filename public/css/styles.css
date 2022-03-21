@@ -1,9 +1,17 @@
-*{
-    background-color: #fae1dd;
+* {
+    background-color: white;
+}
+
+body {
+    margin: 5px;
 }
 
 header{
     text-align: center;
+}
+
+h2 {
+    font-size: large;
 }
 
 table, th, td{

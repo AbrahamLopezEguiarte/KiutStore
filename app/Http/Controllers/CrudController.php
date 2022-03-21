@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class CrudController extends Controller
 {
@@ -39,9 +40,22 @@ class CrudController extends Controller
         $request->validate([
             'name' => 'required',
             'description' => 'required',
-            'price' => 'required'
+            'price' => 'required',
+            'category' => 'required',
+            'image' => 'required|image',
         ]);
-        $producto = Product::create($request->all());
+        $imagenes = $request->image->store('public/img/product');
+        $url = Storage::url($imagenes);
+
+        $producto = new Product();
+        $producto->name = $request->name;
+        $producto->description = $request->description;
+        $producto->price = $request->price;
+        $producto->category = $request->category;
+        $producto->image = $url;
+        $producto->save();
+        
+        
         return redirect()->route('productos.show', $producto);
     }
 
