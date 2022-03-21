@@ -18,7 +18,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('productos', CrudController::class);
+Route::resource('productos', CrudController::class)->middleware(['auth:sanctum', 'admin']);
+
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
-})->name('dashboard');
+})->name('dashboard')->middleware(['auth:sanctum', 'admin']);

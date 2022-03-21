@@ -10,6 +10,7 @@
 </head>
 <body>
     <h1>CRUD principal</h1>
+    <a href="{{url('http://crud_app.test:8080/')}}">Volver a la página principal</a><br>
     <a href="{{route('productos.create')}}">Agregar un nuevo producto</a>
     <table>
         <tr>

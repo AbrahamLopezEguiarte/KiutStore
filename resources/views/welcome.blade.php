@@ -35,7 +35,8 @@
     <div class="offcanvas-menu-wrapper">
         <div class="offcanvas__option">
             <div class="offcanvas__links">
-                <a href="auth/login.blade.php">Iniciar sesión</a>
+                <a href="{{ route('login') }}">Iniciar sesión</a>
+                <a href="{{ route('register') }}">Registrarse</a>
                 <a href="#">FAQs</a>
             </div>
         </div>
@@ -57,8 +58,22 @@
                     <div class="col-lg-12 col-md-5">
                         <div class="header__top__right">
                             <div class="header__top__links">
-                                <a href="login">Iniciar sesión</a>
-                                <a href="#">FAQs</a>
+                                @if (!Auth::check())
+                                    <a href="{{ route('login') }}">Iniciar sesión</a>
+                                    <a href="{{ route('register') }}">Registrarse</a>
+                                    <a href="#">FAQs</a>
+                                @else
+                                    <form method="POST" action="{{ route('logout') }}">
+                                        @csrf
+                                        <a href="{{ route('logout') }}" onclick="event.preventDefault();
+                                        this.closest('form').submit(); " role="button">{{ __('Cerrar sesión') }}
+                                        </a>
+                                    </form>
+                                    @if (Auth::user()->role===1)
+                                        <a href="{{route('productos.index')}}">Ir al CRUD</a>
+                                    @endif
+                                    <a href="{{redirect('/')}}">FAQs</a>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -69,21 +84,21 @@
             <div class="row">
                 <div class="col-lg-3 col-md-3">
                     <div class="header__logo">
-                        <a href="./index.html"><img src="img/logoKiut.png" alt=""></a>
+                        <a href="{{redirect('/')}}"><img src="img/logoKiut.png" alt=""></a>
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6">
                     <nav class="header__menu mobile-menu">
                         <ul>
-                            <li class="active"><a href="./index.html">Inicio</a></li>
+                            <li class="active"><a href="{{redirect('/')}}">Inicio</a></li>
                             <!-- <li><a href="./shop.html">Tienda</a></li> -->
-                            <li><a href="#">Tienda</a></li>
-                            <li><a href="#">Páginas</a>
+                            <li><a href="{{redirect('/')}}">Tienda</a></li>
+                            <li><a href="{{redirect('/')}}">Páginas</a>
                                 <ul class="dropdown">
-                                    <li><a href="#">Nosotros</a></li>
-                                    <li><a href="#">Detalles de compra</a></li>
-                                    <li><a href="#">Carro de compra</a></li>
-                                    <li><a href="#">Pagar</a></li>
+                                    <li><a href="{{redirect('/')}}">Nosotros</a></li>
+                                    <li><a href="{{redirect('/')}}">Detalles de compra</a></li>
+                                    <li><a href="{{redirect('/')}}">Carro de compra</a></li>
+                                    <li><a href="{{redirect('/')}}">Pagar</a></li>
                                     <!-- <li><a href="./about.html">Nosotros</a></li>
                                     <li><a href="./shop-details.html">Detalles de compra</a></li>
                                     <li><a href="./shopping-cart.html">Carro de compra</a></li>
@@ -95,9 +110,9 @@
                 </div>
                 <div class="col-lg-3 col-md-3">
                     <div class="header__nav__option">
-                        <a href="#" class="search-switch"><img src="../img/icon/search.png" alt=""></a>
-                        <a href="#"><img src="../img/icon/heart.png" alt=""></a>
-                        <a href="#"><img src="../img/icon/cart.png" alt=""> <span>0</span></a>
+                        <a href="{{redirect('/')}}" class="search-switch"><img src="../img/icon/search.png" alt=""></a>
+                        <a href="{{redirect('/')}}"><img src="../img/icon/heart.png" alt=""></a>
+                        <a href="{{redirect('/')}}"><img src="../img/icon/cart.png" alt=""> <span>0</span></a>
                         <!-- <div class="price">$0.00</div> -->
                     </div>
                 </div>
@@ -119,7 +134,7 @@
                                 <h6>Nueva Colección</h6>
                                 <h2>Colección 2022</h2>
                                 <p>Mochila moda coreana con una calidad excepcional. </p>
-                                <a href="#" class="primary-btn">Shop now <span class="arrow_right"></span></a>
+                                <a href="{{redirect('/')}}" class="primary-btn">Shop now <span class="arrow_right"></span></a>
                                 <div class="hero__social">
                                     <a href="https://www.facebook.com/KiuToys-101139685147311"><i class="fa fa-facebook"></i></a>
                                     <a href="https://www.instagram.com/kiutoys/"><i class="fa fa-instagram"></i></a>
@@ -137,7 +152,7 @@
                                 <h6>Nueva Colección</h6>
                                 <h2>Colección 2022</h2>
                                 <p>Mochila moda coreana con una calidad excepcional. </p>
-                                <a href="#" class="primary-btn">Comprar ahora <span class="arrow_right"></span></a>
+                                <a href="{{redirect('/')}}" class="primary-btn">Comprar ahora <span class="arrow_right"></span></a>
                                 <div class="hero__social">
                                     <a href="https://www.facebook.com/KiuToys-101139685147311"><i class="fa fa-facebook"></i></a>
                                     <a href="https://www.instagram.com/kiutoys/"><i class="fa fa-instagram"></i></a>
@@ -170,12 +185,12 @@
                         <div class="product__item__pic set-bg" data-setbg="../img/product/mochila-mod1.jpg">
                             <span class="label">New</span>
                             <ul class="product__hover">
-                                <li><a href="#"><img src="../img/icon/heart.png" alt=""></a></li>
+                                <li><a href="{{redirect('/')}}"><img src="../img/icon/heart.png" alt=""></a></li>
                             </ul>
                         </div>
                         <div class="product__item__text">
                             <h6>Set 5 Piezas Mochila Coreana Con Patito</h6>
-                            <a href="#" class="add-cart">+ Add To Cart</a>
+                            <a href="{{redirect('/')}}" class="add-cart">+ Add To Cart</a>
                             <div class="rating">
                                 <i class="fa fa-star-o"></i>
                                 <i class="fa fa-star-o"></i>
@@ -202,12 +217,12 @@
                     <div class="product__item">
                         <div class="product__item__pic set-bg" data-setbg="img/product/mochila-mod2-rosa.jpg">
                             <ul class="product__hover">
-                                <li><a href="#"><img src="../img/icon/heart.png" alt=""></a></li>
+                                <li><a href="{{redirect('/')}}"><img src="../img/icon/heart.png" alt=""></a></li>
                             </ul>
                         </div>
                         <div class="product__item__text">
                             <h6>Set 5 Piezas Mochila Coreana Con Osito</h6>
-                            <a href="#" class="add-cart">+ Add To Cart</a>
+                            <a href="{{redirect('/')}}" class="add-cart">+ Add To Cart</a>
                             <div class="rating">
                                 <i class="fa fa-star-o"></i>
                                 <i class="fa fa-star-o"></i>
@@ -238,12 +253,12 @@
                         <div class="product__item__pic set-bg" data-setbg="../img/product/mochila-mod3-mostaza.jpg">
                             <span class="label">Sale</span>
                             <ul class="product__hover">
-                                <li><a href="#"><img src="../img/icon/heart.png" alt=""></a></li>
+                                <li><a href="{{redirect('/')}}"><img src="../img/icon/heart.png" alt=""></a></li>
                             </ul>
                         </div>
                         <div class="product__item__text">
                             <h6>Set 5 Piezas Mochila Coreana Con Osito</h6>
-                            <a href="#" class="add-cart">+ Add To Cart</a>
+                            <a href="{{redirect('/')}}" class="add-cart">+ Add To Cart</a>
                             <div class="rating">
                                 <i class="fa fa-star"></i>
                                 <i class="fa fa-star"></i>
@@ -270,12 +285,12 @@
                     <div class="product__item">
                         <div class="product__item__pic set-bg" data-setbg="img/product/panalera-patito-morada.jpg">
                             <ul class="product__hover">
-                                <li><a href="#"><img src="../img/icon/heart.png" alt=""></a></li>
+                                <li><a href="{{redirect('/')}}"><img src="../img/icon/heart.png" alt=""></a></li>
                             </ul>
                         </div>
                         <div class="product__item__text">
                             <h6>Pañalera 5 Piezas Diseño De Patito</h6>
-                            <a href="#" class="add-cart">+ Add To Cart</a>
+                            <a href="{{redirect('/')}}" class="add-cart">+ Add To Cart</a>
                             <div class="rating">
                                 <i class="fa fa-star-o"></i>
                                 <i class="fa fa-star-o"></i>
@@ -302,12 +317,12 @@
                     <div class="product__item">
                         <div class="product__item__pic set-bg" data-setbg="../img/product/mochila-mod4-negra.jpg">
                             <ul class="product__hover">
-                                <li><a href="#"><img src="../img/icon/heart.png" alt=""></a></li>
+                                <li><a href="{{redirect('/')}}"><img src="../img/icon/heart.png" alt=""></a></li>
                             </ul>
                         </div>
                         <div class="product__item__text">
                             <h6>Set 5 Piezas Mochila Coreana Con Osito</h6>
-                            <a href="#" class="add-cart">+ Add To Cart</a>
+                            <a href="{{redirect('/')}}" class="add-cart">+ Add To Cart</a>
                             <div class="rating">
                                 <i class="fa fa-star-o"></i>
                                 <i class="fa fa-star-o"></i>
@@ -338,12 +353,12 @@
                         <div class="product__item__pic set-bg" data-setbg="../img/product/mochila-mod5-verde.jpg">
                             <span class="label">Sale</span>
                             <ul class="product__hover">
-                                <li><a href="#"><img src="../img/icon/heart.png" alt=""></a></li>
+                                <li><a href="{{redirect('/')}}"><img src="../img/icon/heart.png" alt=""></a></li>
                             </ul>
                         </div>
                         <div class="product__item__text">
                             <h6>Set 5 Piezas Mochila Coreana Con Osito</h6>
-                            <a href="#" class="add-cart">+ Add To Cart</a>
+                            <a href="{{redirect('/')}}" class="add-cart">+ Add To Cart</a>
                             <div class="rating">
                                 <i class="fa fa-star"></i>
                                 <i class="fa fa-star"></i>
@@ -370,12 +385,12 @@
                     <div class="product__item">
                         <div class="product__item__pic set-bg" data-setbg="img/product/bt21-bandolera-amarilla.jpg">
                             <ul class="product__hover">
-                                <li><a href="#"><img src="img/icon/heart.png" alt=""></a></li>
+                                <li><a href="{{redirect('/')}}"><img src="img/icon/heart.png" alt=""></a></li>
                             </ul>
                         </div>
                         <div class="product__item__text">
                             <h6>BTS BT21 Bolsa Bandolera KPOP</h6>
-                            <a href="#" class="add-cart">+ Add To Cart</a>
+                            <a href="{{redirect('/')}}" class="add-cart">+ Add To Cart</a>
                             <div class="rating">
                                 <i class="fa fa-star-o"></i>
                                 <i class="fa fa-star-o"></i>
@@ -440,19 +455,19 @@
                 <div class="col-lg-3 col-md-6 col-sm-6">
                     <div class="footer__about">
                         <div class="footer__logo">
-                            <a href="#"><img src="img/logo-footer.png" alt=""></a>
+                            <a href="{{redirect('/')}}"><img src="img/logo-footer.png" alt=""></a>
                         </div>
                         <p>El cliente está en el corazón de nuestro modelo de negocio único, que incluye el diseño.</p>
-                        <a href="#"><img src="img/payment.png" alt=""></a>
+                        <a href="{{redirect('/')}}"><img src="img/payment.png" alt=""></a>
                     </div>
                 </div>
                 <div class="col-lg-2 offset-lg-1 col-md-3 col-sm-6">
                     <div class="footer__widget">
                         <h6>Shopping</h6>
                         <ul>
-                            <li><a href="#">Tienda</a></li>
-                            <li><a href="#">Accesorios</a></li>
-                            <li><a href="#">Rebajas</a></li>
+                            <li><a href="{{redirect('/')}}">Tienda</a></li>
+                            <li><a href="{{redirect('/')}}">Accesorios</a></li>
+                            <li><a href="{{redirect('/')}}">Rebajas</a></li>
                         </ul>
                     </div>
                 </div>
@@ -460,7 +475,7 @@
                     <div class="footer__widget">
                         <h6>Tienda</h6>
                         <ul>
-                            <li><a href="#">CONTACTO</a></li>
+                            <li><a href="{{redirect('/')}}">CONTACTO</a></li>
                         </ul>
                     </div>
                 </div>
@@ -501,7 +516,7 @@
         <div class="h-100 d-flex align-items-center justify-content-center">
             <div class="search-close-switch">+</div>
             <form class="search-model-form">
-                <input type="text" id="search-input" placeholder="Search here.....">
+                <input type="text" id="search-input" placeholder="Ingrese el producto...">
             </form>
         </div>
     </div>
