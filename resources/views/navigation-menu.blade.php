@@ -111,11 +111,12 @@
                             <!-- Authentication -->
                             <form method="POST" action="{{ route('logout') }}" x-data>
                                 @csrf
-
+                                @if (Auth::check())
                                 <x-jet-dropdown-link href="{{ route('logout') }}"
-                                         @click.prevent="$root.submit();">
-                                    {{ __('Log Out') }}
+                                    @click.prevent="$root.submit();">
+                                        {{ __('Cerrar sesión') }}
                                 </x-jet-dropdown-link>
+                                @endif
                             </form>
                         </x-slot>
                     </x-jet-dropdown>
