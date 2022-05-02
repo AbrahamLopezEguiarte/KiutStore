@@ -56,7 +56,7 @@ class CrudController extends Controller
         $producto->save();
         
         
-        return redirect()->route('productos.show', $producto);
+        return redirect()->route('productos.show', $producto->id);
     }
 
     /**
@@ -100,7 +100,6 @@ class CrudController extends Controller
         
         $img = $producto->image;
 
-        $producto = new Product();
         $producto->name = $request->name;
         $producto->description = $request->description;
         $producto->price = $request->price;

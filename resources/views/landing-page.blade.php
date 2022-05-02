@@ -173,46 +173,53 @@
             <div class="row">
                 <div class="col-lg-12">
                     <ul class="filter__controls">
-                        <li class="active" data-filter=".mochilas">Mochilas</li>
-                        <li data-filter=".panaleras">Pañaleras</li>
-                        <li data-filter=".accesorios">Accesorios</li>
+                        @foreach($categories as $category)
+                        {{-- <li class="active" data-filter=".mochilas">Mochilas</li>
+                        <li data-filter=".panaleras">Pañaleras</li> --}}
+                        <li data-filter=".{{$category->category}}">{{$category->category}}</li>
+                        @endforeach
                     </ul>
                 </div>
             </div>
             <div class="row product__filter">
-                <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix mochilas">
-                    <div class="product__item">
-                        <div class="product__item__pic set-bg" data-setbg="../img/product/mochila-mod1.jpg">
-                            <span class="label">New</span>
-                            <ul class="product__hover">
-                                <li><a href="{{redirect('/')}}"><img src="../img/icon/heart.png" alt=""></a></li>
-                            </ul>
+            @foreach($products as $product) 
+            <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix {{$product->category}}">
+                <div class="product__item">
+                    <div class="product__item__pic set-bg" data-setbg="{{$product->image}}">
+                        <span class="label">New</span>
+                        <ul class="product__hover">
+                            <li><a href="{{redirect('/')}}"><img src="../img/icon/heart.png" alt=""></a></li>
+                        </ul>
+                    </div>
+                    <div class="product__item__text">
+                        <h6>{{$product->name}}</h6>
+                        <a href="{{redirect('/')}}" class="add-cart">+ Add To Cart</a>
+                        <div class="rating">
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
                         </div>
-                        <div class="product__item__text">
-                            <h6>Set 5 Piezas Mochila Coreana Con Patito</h6>
-                            <a href="{{redirect('/')}}" class="add-cart">+ Add To Cart</a>
-                            <div class="rating">
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                            </div>
-                            <h5>$599</h5>
-                            <div class="product__color__select">
-                                <label for="pc-1">
-                                    <input type="radio" id="pc-1">
-                                </label>
-                                <label class="active beige" for="pc-2">
-                                    <input type="radio" id="pc-2">
-                                </label>
-                                <label class="pink" for="pc-3">
-                                    <input type="radio" id="pc-3">
-                                </label>
-                            </div>
+                        <h5>{{$product->price}}</h5>
+                        <div class="product__color__select">
+                            <label for="pc-1">
+                                <input type="radio" id="pc-1">
+                            </label>
+                            <label class="active beige" for="pc-2">
+                                <input type="radio" id="pc-2">
+                            </label>
+                            <label class="pink" for="pc-3">
+                                <input type="radio" id="pc-3">
+                            </label>
                         </div>
                     </div>
                 </div>
+            </div>
+            
+            @endforeach
+            </div>
+            {{-- 
                 <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix mochilas">
                     <div class="product__item">
                         <div class="product__item__pic set-bg" data-setbg="img/product/mochila-mod2-rosa.jpg">
@@ -416,7 +423,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
     </section>

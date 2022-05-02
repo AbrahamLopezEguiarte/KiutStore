@@ -40,7 +40,7 @@
                         <br>
                     @enderror
                 </div>
-                <div class="col-6 mt-2">
+                <div class="col-4 mt-2">
                     <label for="price" class="form-label">Precio</label>
                     <input class="form-control" type="number" name="price" value="{{old('price')}}">
                     @error('price')
@@ -49,6 +49,12 @@
                         <br>
                     @enderror
                 </div>
+
+                <div class="col-2 mt-2">
+                    <label for="exampleColorInput" class="form-label">Color</label>
+                    <input type="color" class="form-control form-control-color" id="exampleColorInput" value="#563d7c" title="Choose your color">
+                </div>
+
                 <div class="col-md-2 mt-2">
                     <label for="category" class="form-label">Categoría 
                         <br>
