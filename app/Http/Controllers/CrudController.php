@@ -46,12 +46,7 @@ class CrudController extends Controller
         ]);
         $imagenes = $request->image->store('public/img/product');
         $url = Storage::url($imagenes);
-
-        $producto = new Product();
-        $producto->name = $request->name;
-        $producto->description = $request->description;
-        $producto->price = $request->price;
-        $producto->category = $request->category;
+        $producto = Product::create($request->all());
         $producto->image = $url;
         $producto->save();
         

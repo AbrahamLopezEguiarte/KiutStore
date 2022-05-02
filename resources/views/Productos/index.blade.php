@@ -60,7 +60,7 @@
         </div>
     </header>
     <h1 class="text-center mt-2" style="font-size: 60px">Productos</h1>
-    
+    <a href="{{url('http://crud_app.test:8080/')}}" class="badge badge-pill badge-light mb-2">Regresar a la página principal</a>
     <a href="{{route('productos.create')}}" class="badge badge-pill badge-light mb-2">Agregar un nuevo producto</a>   
     <table class="table table-striped">
     <thead class="thead-dark">
