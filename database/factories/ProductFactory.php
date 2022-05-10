@@ -19,7 +19,9 @@ class ProductFactory extends Factory
         return [
             'name'=>$this->faker->sentence(),
             'description'=>$this->faker->paragraph(),
-            'price'=>$this->faker->randomFloat(2, 0, 1)
+            'price'=>$this->faker->randomFloat(2, 0, 1),
+            'category'=>$this->faker->randomElement($array = ['Mochila', 'Pañalera']),
+            'image'=>$this->faker->image('public/img/product', 50, 50, null, false)
         ];
     }
 }

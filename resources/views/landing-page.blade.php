@@ -168,14 +168,15 @@
 
 
     <!-- Product Section Begin -->
+    {{--
     <section class="product spad">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
                     <ul class="filter__controls">
                         @foreach($categories as $category)
-                        {{-- <li class="active" data-filter=".mochilas">Mochilas</li>
-                        <li data-filter=".panaleras">Pañaleras</li> --}}
+                        <li class="active" data-filter=".mochilas">Mochilas</li>
+                        <li data-filter=".panaleras">Pañaleras</li>
                         <li data-filter=".{{$category->category}}">{{$category->category}}</li>
                         @endforeach
                     </ul>
@@ -218,8 +219,7 @@
             </div>
             
             @endforeach
-            </div>
-            {{-- 
+            </div> 
                 <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix mochilas">
                     <div class="product__item">
                         <div class="product__item__pic set-bg" data-setbg="img/product/mochila-mod2-rosa.jpg">
@@ -423,10 +423,10 @@
                             </div>
                         </div>
                     </div>
-                </div> --}}
+                </div> 
             </div>
         </div>
-    </section>
+    </section>--}}
     <!-- Product Section End -->
 
     <!-- Instagram Section Begin -->

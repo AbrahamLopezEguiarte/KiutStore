@@ -46,11 +46,6 @@
                                         this.closest('form').submit(); " role="button">{{ __('Cerrar sesión') }}
                                         </a>
                                     </form>
-                                    
-                                    {{-- Cambiar por route --}}
-                                    <a href="{{redirect('/')}}">INICIO</a>
-                                    
-                                    <a href="{{redirect('/')}}">FAQs</a>
                                 @endif
                             </div>
                         </div>
@@ -60,8 +55,23 @@
         </div>
     </header>
     <h1 class="text-center mt-2" style="font-size: 60px">Productos</h1>
-    <a href="{{url('http://crud_app.test:8080/')}}" class="badge badge-pill badge-light mb-2">Regresar a la página principal</a>
-    <a href="{{route('productos.create')}}" class="badge badge-pill badge-light mb-2">Agregar un nuevo producto</a>   
+    @if (session()->has('message'))
+        <div class="bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md" role="alert">
+            <div class="flex">
+            <div class="py-1"><svg class="fill-current h-6 w-6 text-teal-500 mr-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z"/></svg></div>
+                <div>
+                    <p class="font-bold">Eliminado exitoso</p>
+                    <p class="text-sm">El producto deseado fue eliminado de forma exitosa.</p>
+                </div>
+            </div>
+        </div>
+    @endif
+    <a href="{{url('/')}}" class="badge badge-pill badge-light mb-2">Regresar a la página principal</a>
+    <a href="{{route('productos.create')}}" class="badge badge-pill badge-light mb-2">Agregar un nuevo producto</a>
+    <form action="{{route('productos.restore')}}" method="POST">
+        @csrf
+        <button type="submit" class="badge badge-pill badge-light mb-2">Restaurar producto</button>
+        <input type="number" name="product">
     <table class="table table-striped">
     <thead class="thead-dark">
         <tr>
@@ -90,7 +100,6 @@
         </td>
         </tr>
         @endforeach
-        
     </tbody>
     </table>
     {{ $productos->links() }}

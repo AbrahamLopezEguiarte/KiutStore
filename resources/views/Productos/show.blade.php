@@ -43,9 +43,7 @@
                                     </form>
                                     
                                     {{-- Cambiar por route --}}
-                                    <a href="{{redirect('/')}}">INICIO</a>
-                                    
-                                    <a href="{{redirect('/')}}">FAQs</a>
+                                    <a href="{{url('/')}}">INICIO</a>
                                 @endif
                             </div>
                         </div>
@@ -55,6 +53,13 @@
         </div>
     </header>
     <h1 class="text-center mt-2" style="font-size: 60px">Show</h1>
+    <div>
+        @if (session()->has('message'))
+            <div class="alert alert-success">
+                {{ session('message') }}
+            </div>
+        @endif
+    </div>
     <a href="{{route('productos.index')}}" class="badge badge-pill badge-light mb-2">Volver a la página principal</a>
     <table class="table table-striped">
         <thead class="thead-dark">

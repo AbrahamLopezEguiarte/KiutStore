@@ -15,7 +15,7 @@ class CrudController extends Controller
      */
     public function index()
     {
-        $productos = Product::paginate();
+        $productos = Product::paginate(15);
         return view('productos.index', compact('productos'));
     }
 
@@ -50,8 +50,9 @@ class CrudController extends Controller
         $producto->image = $url;
         $producto->save();
         
-        
-        return redirect()->route('productos.show', $producto->id);
+        session()->flash('message', 'Producto agregado exitosamente.');
+
+        return redirect()->route('productos.show', $producto);
     }
 
     /**
@@ -111,7 +112,7 @@ class CrudController extends Controller
         }
 
         $producto->save();
-
+        session()->flash('message', 'Producto editado exitosamente.');
         return redirect()->route('productos.show', $producto);
     }
 
@@ -124,6 +125,14 @@ class CrudController extends Controller
     public function destroy(Product $producto)
     {
         $producto->delete();
+        session()->flash('message');
         return redirect()->route('productos.index');
+    }
+
+    public function restore(Request $id)
+    {
+        Product::onlyTrashed()->whereIn('id', $id)->restore();
+  
+        return redirect()->back();
     }
 }

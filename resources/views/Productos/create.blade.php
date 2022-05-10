@@ -74,7 +74,7 @@
                     <label class="form-label" for="image">
                         Subir imagen
                         <br>
-                        <input type="file" name="image" id="image" accept="image/*" >
+                        <input type="file" name="image" id="image" accept="image/*">
                         @error('image')
                             <br>
                             <small>* {{$message}}</small>
@@ -83,7 +83,6 @@
                         @enderror
                     </label>
                 </div>
-
                 <div class="col-3 mt-5 mx-auto" style="width: 200px;">
                     <button type="submit" class="btn btn-outline-dark">Enviar información</button>
                 </div>
