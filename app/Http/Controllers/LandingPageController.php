@@ -16,7 +16,7 @@ class LandingPageController extends Controller
     public function index()
     {
         $categories = Product::select('category')->distinct()->get();
-        $products = Product::get();
+        $products = Product::paginate();
 
         return view('landing-page')->with([
             'categories' => $categories,

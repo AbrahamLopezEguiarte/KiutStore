@@ -15,7 +15,7 @@ class CrudController extends Controller
      */
     public function index()
     {
-        $productos = Product::paginate();
+        $productos = Product::paginate(10);
         return view('productos.index', compact('productos'));
     }
 
