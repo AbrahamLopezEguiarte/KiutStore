@@ -50,11 +50,6 @@
                     @enderror
                 </div>
 
-                <div class="col-2 mt-2">
-                    <label for="exampleColorInput" class="form-label">Color</label>
-                    <input type="color" class="form-control form-control-color" id="exampleColorInput" value="#563d7c" title="Choose your color">
-                </div>
-
                 <div class="col-md-2 mt-2">
                     <label for="category" class="form-label">Categoría 
                         <br>
