@@ -42,7 +42,7 @@
                 </div>
                 <div class="col-4 mt-2">
                     <label for="price" class="form-label">Precio</label>
-                    <input class="form-control" type="number" name="price" value="{{old('price')}}">
+                    <input class="form-control" type="number" step="any" name="price" value="{{old('price')}}">
                     @error('price')
                         <small>* {{$message}}</small>
                         <br>

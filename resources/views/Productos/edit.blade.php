@@ -19,7 +19,7 @@
                 @method('put')
                 <div class="col-md-12 mt-2">
                     <label for="name" class="form-label">Producto</label>
-                    <input type="text" name="name" value="{{old('name', $producto->name)}}" class="form-control">
+                    <input type="text" name="name" step="any" value="{{old('name', $producto->name)}}" class="form-control">
                     @error('name')
                         <small>* {{$message}}</small>
                         <br>
