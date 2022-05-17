@@ -23,6 +23,8 @@ Route::post('productos/restore', [CrudController::class, 'restore'])->name('prod
 
 Route::resource('productos', CrudController::class)->middleware(['auth:sanctum', 'admin']);
 
+Route::get('download-pdf', [CrudController::class, 'downloadPdf'])->name('download-pdf');
+
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard')->middleware(['auth:sanctum', 'admin']);

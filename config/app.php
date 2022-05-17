@@ -178,6 +178,8 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\FortifyServiceProvider::class,
         App\Providers\JetstreamServiceProvider::class,
+        // Librería para creación de PDF
+        Barryvdh\DomPDF\ServiceProvider::class,
 
     ],
 

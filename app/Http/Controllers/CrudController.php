@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -44,7 +45,7 @@ class CrudController extends Controller
             'category' => 'required',
             'image' => 'required|image',
         ]);
-        $imagenes = $request->image->store('public/img/product');
+        $imagenes = $request->image->store('/public/img/product');
         $url = Storage::url($imagenes);
         $producto = Product::create($request->all());
         $producto->image = $url;
@@ -102,7 +103,7 @@ class CrudController extends Controller
         $producto->category = $request->category;
 
         if($request->image) {
-            $imagenes = $request->image->store('public/img/product');
+            $imagenes = $request->image->store('/public/img/product');
             $url = Storage::url($imagenes);
             $producto->image = $url;
         }
@@ -134,5 +135,16 @@ class CrudController extends Controller
         Product::onlyTrashed()->whereIn('id', $id)->restore();
   
         return redirect()->back();
+    }
+
+    public function downloadPdf()
+    {
+        $productos = Product::all();
+
+        view()->share('productos.download',$productos);
+
+        $pdf = PDF::setOptions(['isHtmlSparserEnabled' => true, 'isRemoteEnabled' => true])->loadView('productos.download', ['users' => $productos]);
+
+        return $pdf->download('Lista de productos.pdf');
     }
 }
