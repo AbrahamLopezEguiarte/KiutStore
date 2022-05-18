@@ -72,9 +72,7 @@
         @csrf
         <button type="submit" class="badge badge-pill badge-light mb-2">Restaurar producto</button>
         <input type="number" name="product">
-    <div class="col-xl-12 text-right">
-        <a href="{{ route('download-pdf') }}" class="btn btn-success btn-sm">Export to PDF</a>
-    </div>
+    <a href="{{ route('download-pdf') }}" class="btn btn-success btn-sm">Export to PDF</a>
     <table class="table table-striped">
     <thead class="thead-dark">
         <tr>
