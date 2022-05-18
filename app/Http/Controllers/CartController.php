@@ -50,12 +50,12 @@ class CartController extends Controller
     //funciona bien
     public function index()
     {
-        $cart = Cart::where('user_id', Auth::id())->get();
-        $cartItems = Cart::find($cart[0]->id)->cart_items;
+        $cart = $this->addCart();
+        $cartItems = Cart::find($cart->id)->cart_items;
         
         return view('shop.shopping-cart')->with([
             'cartItems' => $cartItems,
-            'cart' => $cart[0]
+            'cart' => $cart
         ]);
     }
 
