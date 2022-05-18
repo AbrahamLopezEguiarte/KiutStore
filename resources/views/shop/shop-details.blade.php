@@ -121,8 +121,10 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="product__details__breadcrumb">
-                            <a href="./">Home</a>
-                            <a href="./shop">Shop</a>
+                            <!-- <a href="./">Home</a>
+                            <a href="./shop">Shop</a> -->
+                            <a href="{{route('landingpage')}}">Inicio</a>
+                            <a href="{{route('shop.index')}}">Tienda</a>
                             <span>Product Details</span>
                         </div>
                     </div>
@@ -477,31 +479,27 @@
                 <div class="col-lg-3 col-md-6 col-sm-6">
                     <div class="footer__about">
                         <div class="footer__logo">
-                            <a href="#"><img src="img/footer-logo.png" alt=""></a>
+                            <a href="{{redirect('/')}}"><img src="img/logo-footer.png" alt=""></a>
                         </div>
-                        <p>The customer is at the heart of our unique business model, which includes design.</p>
-                        <a href="#"><img src="img/payment.png" alt=""></a>
+                        <p>El cliente está en el corazón de nuestro modelo de negocio único, que incluye el diseño.</p>
+                        <a href="{{redirect('/')}}"><img src="img/payment.png" alt=""></a>
                     </div>
                 </div>
                 <div class="col-lg-2 offset-lg-1 col-md-3 col-sm-6">
                     <div class="footer__widget">
                         <h6>Shopping</h6>
                         <ul>
-                            <li><a href="#">Clothing Store</a></li>
-                            <li><a href="#">Trending Shoes</a></li>
-                            <li><a href="#">Accessories</a></li>
-                            <li><a href="#">Sale</a></li>
+                            <li><a href="{{redirect('/')}}">Tienda</a></li>
+                            <li><a href="{{redirect('/')}}">Accesorios</a></li>
+                            <li><a href="{{redirect('/')}}">Rebajas</a></li>
                         </ul>
                     </div>
                 </div>
                 <div class="col-lg-2 col-md-3 col-sm-6">
                     <div class="footer__widget">
-                        <h6>Shopping</h6>
+                        <h6>Tienda</h6>
                         <ul>
-                            <li><a href="#">Contact Us</a></li>
-                            <li><a href="#">Payment Methods</a></li>
-                            <li><a href="#">Delivary</a></li>
-                            <li><a href="#">Return & Exchanges</a></li>
+                            <li><a href="{{redirect('/')}}">CONTACTO</a></li>
                         </ul>
                     </div>
                 </div>
@@ -509,7 +507,7 @@
                     <div class="footer__widget">
                         <h6>NewLetter</h6>
                         <div class="footer__newslatter">
-                            <p>Be the first to know about new arrivals, look books, sales & promos!</p>
+                            <p>SUSCRÍBETE PARA RECIBIR OFERTAS EXCLUSIVAS, PROMOCIONES Y NOTICIAS DE KIUTSTORE</p>
                             <form action="#">
                                 <input type="text" placeholder="Your email">
                                 <button type="submit"><span class="icon_mail_alt"></span></button>
@@ -542,7 +540,7 @@
         <div class="h-100 d-flex align-items-center justify-content-center">
             <div class="search-close-switch">+</div>
             <form class="search-model-form">
-                <input type="text" id="search-input" placeholder="Search here.....">
+                <input type="text" id="search-input" placeholder="Ingrese el producto...">
             </form>
         </div>
     </div>

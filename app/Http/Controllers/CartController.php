@@ -18,7 +18,7 @@ class CartController extends Controller
 
         $cart->save();
 
-        return $cart->id;
+        return $cart;
     }
 
     public function addCartItem($product_id, $cart_id)
@@ -29,7 +29,14 @@ class CartController extends Controller
         ]);
         
         $cartItem->quantity = $cartItem->quantity + 1;
+        $product_price = $cartItem->product->price;
+        $cartItem->price = $cartItem->quantity * $product_price;
         $cartItem->save();
+
+        //Incrementar precio del carrito
+        $cart = Cart::where('id', '=', $cart_id)->get();
+        $cart[0]['price'] = $cart[0]['price'] + $product_price;
+        $cart[0]->save();
 
         return $cartItem;
     }
@@ -43,10 +50,13 @@ class CartController extends Controller
     //funciona bien
     public function index()
     {
-        $cart = Cart::where('user_id', Auth::id())->get();
-        $cartItems = Cart::find($cart[0]->id)->cart_items;
+        $cart = $this->addCart();
+        $cartItems = Cart::find($cart->id)->cart_items;
         
-        return view('shop.shopping-cart', compact('cartItems'));
+        return view('shop.shopping-cart')->with([
+            'cartItems' => $cartItems,
+            'cart' => $cart
+        ]);
     }
 
     /**
@@ -69,13 +79,16 @@ class CartController extends Controller
      //"Undefined variable $cartItems"
     public function store(Request $request)
     {
-        $cart_id = $this->addCart();
+        $cart = $this->addCart();
 
-        $this->addCartItem($request->product_id, $cart_id);
+        $this->addCartItem($request->product_id, $cart->id);
 
-        $cartItems = Cart::find($cart_id)->cart_items;
+        $cartItems = Cart::find($cart->id)->cart_items;
         
-        return view('shop.shopping-cart', compact('cartItems'));
+        return view('shop.shopping-cart')->with([
+            'cartItems' => $cartItems,
+            'cart' => $cart
+        ]);;
     }
 
     /**
