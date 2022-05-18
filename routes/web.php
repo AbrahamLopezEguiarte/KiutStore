@@ -1,8 +1,11 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CrudController;
 use App\Http\Controllers\LandingPageController;
+use App\Http\Controllers\ShopController;
+use App\Http\Controllers\ShoppingCartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,9 +18,11 @@ use App\Http\Controllers\LandingPageController;
 |
 */
 
-Route::get('/', function () {
-    return view('landing-page');
-});
+Route::get('/', 'App\Http\Controllers\LandingPageController@index')->middleware(['auth', 'verified'])->name('landingpage');
+
+Route::resource('cart', CartController::class)->middleware(['auth', 'verified']);
+
+Route::resource('shop', ShopController::class)->middleware(['auth', 'verified']);
 
 Route::post('productos/restore', [CrudController::class, 'restore'])->name('productos.restore');
 
@@ -27,7 +32,8 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard')->middleware(['auth:sanctum', 'admin']);
 
-//Cambiar la ruta get "/" por la ruta deseada en el futuro
+/* //Cambiar la ruta get "/" por la ruta deseada en el futuro
 Route::get('/', function () {
     return view('landing-page');
-})->middleware(['auth', 'verified'])->name('landing-page');
+})->middleware(['auth', 'verified'])->name('landing-page'); */
+

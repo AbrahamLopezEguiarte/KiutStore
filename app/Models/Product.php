@@ -19,4 +19,9 @@ class Product extends Model
     public function setDescriptionAttribute($value){
         $this->attributes['description'] = ucfirst($value);
     }
+
+    public function cart_item()
+    {
+        return $this->hasOne(CartItem::class);
+    }
 }

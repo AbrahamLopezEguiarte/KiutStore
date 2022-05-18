@@ -59,8 +59,8 @@
                     <label for="category" class="form-label">Categoría 
                         <br>
                         <select id="category" name="category" class="form-select">
-                            <option value="Mochilas" selected>Mochilas</option>
-                            <option value="Pañaleras">Pañaleras</option>
+                            <option value="Mochila" selected>Mochila</option>
+                            <option value="Pañalera">Pañalera</option>
                         </select>
                         @error('category')
                             <br>

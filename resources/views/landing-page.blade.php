@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
+    <link rel="stylesheet" href="css/styles.css" type="text/css">
 </head>
 
 <body>
@@ -36,8 +37,7 @@
         <div class="offcanvas__option">
             <div class="offcanvas__links">
                 <a href="{{ route('login') }}">Iniciar sesión</a>
-                <a href="{{ route('register') }}">Registrarse</a>
-                <a href="#">FAQs</a>
+                <a href="{{ route('register') }}">Registrarse</a>                
             </div>
         </div>
         <div class="offcanvas__nav__option">
@@ -61,7 +61,6 @@
                                 @if (!Auth::check())
                                     <a href="{{ route('login') }}">Iniciar sesión</a>
                                     <a href="{{ route('register') }}">Registrarse</a>
-                                    <a href="#">FAQs</a>
                                 @else
                                     <form method="POST" action="{{ route('logout') }}">
                                         @csrf
@@ -72,7 +71,6 @@
                                     @if (Auth::user()->role===1)
                                         <a href="{{route('productos.index')}}">Ir al CRUD</a>
                                     @endif
-                                    <a href="{{redirect('/')}}">FAQs</a>
                                 @endif
                             </div>
                         </div>
@@ -91,18 +89,13 @@
                     <nav class="header__menu mobile-menu">
                         <ul>
                             <li class="active"><a href="{{redirect('/')}}">Inicio</a></li>
-                            <!-- <li><a href="./shop.html">Tienda</a></li> -->
-                            <li><a href="{{redirect('/')}}">Tienda</a></li>
+                            <li><a href="{{route('shop.index')}}">Tienda</a></li>
                             <li><a href="{{redirect('/')}}">Páginas</a>
                                 <ul class="dropdown">
                                     <li><a href="{{redirect('/')}}">Nosotros</a></li>
                                     <li><a href="{{redirect('/')}}">Detalles de compra</a></li>
-                                    <li><a href="{{redirect('/')}}">Carro de compra</a></li>
+                                    <li><a href="{{route('cart.index')}}">Carro de compra</a></li>
                                     <li><a href="{{redirect('/')}}">Pagar</a></li>
-                                    <!-- <li><a href="./about.html">Nosotros</a></li>
-                                    <li><a href="./shop-details.html">Detalles de compra</a></li>
-                                    <li><a href="./shopping-cart.html">Carro de compra</a></li>
-                                    <li><a href="./checkout.html">Pagar</a></li> -->
                                 </ul>
                             </li>
                         </ul>
@@ -168,265 +161,63 @@
 
 
     <!-- Product Section Begin -->
-    {{--
     <section class="product spad">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
                     <ul class="filter__controls">
+                        <li class="active" data-filter=".all">Todo</li>
                         @foreach($categories as $category)
-                        <li class="active" data-filter=".mochilas">Mochilas</li>
-                        <li data-filter=".panaleras">Pañaleras</li>
-                        <li data-filter=".{{$category->category}}">{{$category->category}}</li>
+                            <li data-filter=".{{$category->category}}">{{$category->category}}</li>
                         @endforeach
                     </ul>
                 </div>
             </div>
             <div class="row product__filter">
             @foreach($products as $product) 
-            <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix {{$product->category}}">
-                <div class="product__item">
-                    <div class="product__item__pic set-bg" data-setbg="{{$product->image}}">
-                        <span class="label">New</span>
-                        <ul class="product__hover">
-                            <li><a href="{{redirect('/')}}"><img src="../img/icon/heart.png" alt=""></a></li>
-                        </ul>
-                    </div>
-                    <div class="product__item__text">
-                        <h6>{{$product->name}}</h6>
-                        <a href="{{redirect('/')}}" class="add-cart">+ Add To Cart</a>
-                        <div class="rating">
-                            <i class="fa fa-star-o"></i>
-                            <i class="fa fa-star-o"></i>
-                            <i class="fa fa-star-o"></i>
-                            <i class="fa fa-star-o"></i>
-                            <i class="fa fa-star-o"></i>
+                <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix {{$product->category}} all">
+                    <div class="product__item">
+                        <div class="product__item__pic set-bg" data-setbg="{{$product->image}}">
+                            <span class="label">New</span>
+                            <ul class="product__hover">
+                                <li><a href="{{redirect('/')}}"><img src="../img/icon/heart.png" alt=""></a></li>
+                            </ul>
                         </div>
-                        <h5>{{$product->price}}</h5>
-                        <div class="product__color__select">
-                            <label for="pc-1">
-                                <input type="radio" id="pc-1">
-                            </label>
-                            <label class="active beige" for="pc-2">
-                                <input type="radio" id="pc-2">
-                            </label>
-                            <label class="pink" for="pc-3">
-                                <input type="radio" id="pc-3">
-                            </label>
+                        <div class="product__item__text">
+                            <h6>{{$product->name}}</h6>
+                            <div class="formAdd">
+                                <form action="{{ route('cart.store') }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                    <button type="submit" class="btn btn-light remove-btn">+ Add To Cart</button>
+                                </form>
+                            </div>
+                            <div class="rating">
+                                <i class="fa fa-star-o"></i>
+                                <i class="fa fa-star-o"></i>
+                                <i class="fa fa-star-o"></i>
+                                <i class="fa fa-star-o"></i>
+                                <i class="fa fa-star-o"></i>
+                            </div>
+                            <h5>${{$product->price}}</h5>
+                            <div class="product__color__select">
+                                <label for="pc-1">
+                                    <input type="radio" id="pc-1">
+                                </label>
+                                <label class="active beige" for="pc-2">
+                                    <input type="radio" id="pc-2">
+                                </label>
+                                <label class="pink" for="pc-3">
+                                    <input type="radio" id="pc-3">
+                                </label>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            
             @endforeach
-            </div> 
-                <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix mochilas">
-                    <div class="product__item">
-                        <div class="product__item__pic set-bg" data-setbg="img/product/mochila-mod2-rosa.jpg">
-                            <ul class="product__hover">
-                                <li><a href="{{redirect('/')}}"><img src="../img/icon/heart.png" alt=""></a></li>
-                            </ul>
-                        </div>
-                        <div class="product__item__text">
-                            <h6>Set 5 Piezas Mochila Coreana Con Osito</h6>
-                            <a href="{{redirect('/')}}" class="add-cart">+ Add To Cart</a>
-                            <div class="rating">
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                            </div>
-                            <h5>$599</h5>
-                            <div class="product__color__select">
-                                <label for="pc-4">
-                                    <input type="radio" id="pc-4">
-                                </label>
-                                <label class="active pink" for="pc-5">
-                                    <input type="radio" id="pc-5">
-                                </label>
-                                <label class="black" for="pc-6">
-                                    <input type="radio" id="pc-6">
-                                </label>
-                                <label class="purple" for="pc-7">
-                                    <input type="radio" id="pc-7">
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix mochilas">
-                    <div class="product__item sale">
-                        <div class="product__item__pic set-bg" data-setbg="../img/product/mochila-mod3-mostaza.jpg">
-                            <span class="label">Sale</span>
-                            <ul class="product__hover">
-                                <li><a href="{{redirect('/')}}"><img src="../img/icon/heart.png" alt=""></a></li>
-                            </ul>
-                        </div>
-                        <div class="product__item__text">
-                            <h6>Set 5 Piezas Mochila Coreana Con Osito</h6>
-                            <a href="{{redirect('/')}}" class="add-cart">+ Add To Cart</a>
-                            <div class="rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star-o"></i>
-                            </div>
-                            <h5>$599</h5>
-                            <div class="product__color__select">
-                                <label for="pc-8">
-                                    <input type="radio" id="pc-8">
-                                </label>
-                                <label class="active mustard" for="pc-9">
-                                    <input type="radio" id="pc-9">
-                                </label>
-                                <label class="pink" for="pc-10">
-                                    <input type="radio" id="pc-10">
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix panaleras">
-                    <div class="product__item">
-                        <div class="product__item__pic set-bg" data-setbg="img/product/panalera-patito-morada.jpg">
-                            <ul class="product__hover">
-                                <li><a href="{{redirect('/')}}"><img src="../img/icon/heart.png" alt=""></a></li>
-                            </ul>
-                        </div>
-                        <div class="product__item__text">
-                            <h6>Pañalera 5 Piezas Diseño De Patito</h6>
-                            <a href="{{redirect('/')}}" class="add-cart">+ Add To Cart</a>
-                            <div class="rating">
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                            </div>
-                            <h5>$589</h5>
-                            <div class="product__color__select">
-                                <label for="pc-11" class="pink">
-                                    <input type="radio" id="pc-11">
-                                </label>
-                                <label class="active purple" for="pc-12">
-                                    <input type="radio" id="pc-12">
-                                </label>
-                                <label class="black" for="pc-13">
-                                    <input type="radio" id="pc-13">
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix mochilas">
-                    <div class="product__item">
-                        <div class="product__item__pic set-bg" data-setbg="../img/product/mochila-mod4-negra.jpg">
-                            <ul class="product__hover">
-                                <li><a href="{{redirect('/')}}"><img src="../img/icon/heart.png" alt=""></a></li>
-                            </ul>
-                        </div>
-                        <div class="product__item__text">
-                            <h6>Set 5 Piezas Mochila Coreana Con Osito</h6>
-                            <a href="{{redirect('/')}}" class="add-cart">+ Add To Cart</a>
-                            <div class="rating">
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                            </div>
-                            <h5>$599</h5>
-                            <div class="product__color__select">
-                                <label for="pc-14" class="pink">
-                                    <input type="radio" id="pc-14">
-                                </label>
-                                <label class="active black" for="pc-15">
-                                    <input type="radio" id="pc-15">
-                                </label>
-                                <label class="beige" for="pc-16">
-                                    <input type="radio" id="pc-16">
-                                </label>
-                                <label class="blue" for="pc-17">
-                                    <input type="radio" id="pc-17">
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix mochilas">
-                    <div class="product__item sale">
-                        <div class="product__item__pic set-bg" data-setbg="../img/product/mochila-mod5-verde.jpg">
-                            <span class="label">Sale</span>
-                            <ul class="product__hover">
-                                <li><a href="{{redirect('/')}}"><img src="../img/icon/heart.png" alt=""></a></li>
-                            </ul>
-                        </div>
-                        <div class="product__item__text">
-                            <h6>Set 5 Piezas Mochila Coreana Con Osito</h6>
-                            <a href="{{redirect('/')}}" class="add-cart">+ Add To Cart</a>
-                            <div class="rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star-o"></i>
-                            </div>
-                            <h5>$599</h5>
-                            <div class="product__color__select">
-                                <label for="pc-18" class="pink">
-                                    <input type="radio" id="pc-18">
-                                </label>
-                                <label class="active green" for="pc-19">
-                                    <input type="radio" id="pc-19">
-                                </label>
-                                <label class="black" for="pc-20">
-                                    <input type="radio" id="pc-20">
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix accesorios">
-                    <div class="product__item">
-                        <div class="product__item__pic set-bg" data-setbg="img/product/bt21-bandolera-amarilla.jpg">
-                            <ul class="product__hover">
-                                <li><a href="{{redirect('/')}}"><img src="img/icon/heart.png" alt=""></a></li>
-                            </ul>
-                        </div>
-                        <div class="product__item__text">
-                            <h6>BTS BT21 Bolsa Bandolera KPOP</h6>
-                            <a href="{{redirect('/')}}" class="add-cart">+ Add To Cart</a>
-                            <div class="rating">
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                            </div>
-                            <h5>$359</h5>
-                            <div class="product__color__select">
-                                <label for="pc-21">
-                                    <input type="radio" id="pc-21">
-                                </label>
-                                <label class="active yellow" for="pc-22">
-                                    <input type="radio" id="pc-22">
-                                </label>
-                                <label class="brown" for="pc-23">
-                                    <input type="radio" id="pc-23">
-                                </label>
-                                <label class="red" for="pc-24">
-                                    <input type="radio" id="pc-24">
-                                </label>
-
-                            </div>
-                        </div>
-                    </div>
-                </div> 
             </div>
         </div>
-    </section>--}}
+    </section>
     <!-- Product Section End -->
 
     <!-- Instagram Section Begin -->
