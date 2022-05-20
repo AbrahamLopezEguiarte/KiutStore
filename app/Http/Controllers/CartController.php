@@ -7,6 +7,7 @@ use App\Models\CartItem;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 
 class CartController extends Controller
 {
@@ -40,6 +41,7 @@ class CartController extends Controller
 
         return $cartItem;
     }
+
 
     /**
      * Display a listing of the resource.
@@ -76,7 +78,7 @@ class CartController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-     //"Undefined variable $cartItems"
+
     public function store(Request $request)
     {
         $cart = $this->addCart();
@@ -84,11 +86,8 @@ class CartController extends Controller
         $this->addCartItem($request->product_id, $cart->id);
 
         $cartItems = Cart::find($cart->id)->cart_items;
-        
-        return view('shop.shopping-cart')->with([
-            'cartItems' => $cartItems,
-            'cart' => $cart
-        ]);;
+
+        return redirect()->route('cart.index');
     }
 
     /**
@@ -120,9 +119,26 @@ class CartController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $item)
     {
-        //
+        $qty = $request->quantity;
+        $cartItem = CartItem::find($item);
+    
+        $cartItem->quantity = $qty;
+
+        $product_price = $cartItem->product->price;
+        $item_price = $cartItem->price;
+        
+        $cartItem->price = $cartItem->quantity * $product_price;
+        
+        $cartItem->save();
+
+        //Modificar precio del carrito
+        $cart = CartItem::find($cartItem->id)->cart;
+        $cart->price = $cart->price - $item_price  + $cartItem->price;
+        $cart->save();
+
+        return redirect()->route('cart.index');
     }
 
     /**
@@ -131,8 +147,18 @@ class CartController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($item)
     {
-        //
+        //Acualizar precio del carrito
+        $cart = CartItem::find($item)->cart;
+        $item_price = CartItem::find($item)->price;
+        
+        $cart->price = $cart->price - $item_price;
+        $cart->save();
+
+        CartItem::destroy($item);
+
+        session()->flash('message');
+        return redirect()->route('cart.index');
     }
 }
