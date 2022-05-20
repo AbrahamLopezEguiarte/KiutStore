@@ -10,6 +10,11 @@
         <div class="price">$0.00</div>
     @endsection
 
+    @section('page')
+        <li><a href="{{route('landingpage')}}">Inicio</a></li>
+        <li class="active"><a href="{{route('shop.index')}}">Tienda</a></li>
+        <li><a href="{{redirect('/')}}">Páginas</a>
+    @endsection
     <!-- Shop Details Section Begin -->
     <section class="shop-details">
         <div class="product__details__pic">

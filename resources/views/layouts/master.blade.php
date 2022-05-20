@@ -83,9 +83,7 @@
                 <div class="col-lg-6 col-md-6">
                     <nav class="header__menu mobile-menu">
                         <ul>
-                            <li class="active"><a href="{{redirect('/')}}">Inicio</a></li>
-                            <li><a href="{{route('shop.index')}}">Tienda</a></li>
-                            <li><a href="{{redirect('/')}}">Páginas</a>
+                            @yield('page')
                                 <ul class="dropdown">
                                     <li><a href="{{redirect('/')}}">Nosotros</a></li>
                                     <li><a href="{{redirect('/')}}">Detalles de compra</a></li>
@@ -101,7 +99,6 @@
                         <a href="{{redirect('/')}}" class="search-switch"><img src="../img/icon/search.png" alt=""></a>
                         <a href="{{redirect('/')}}"><img src="../img/icon/heart.png" alt=""></a>
                         <a href="{{redirect('/')}}"><img src="../img/icon/cart.png" alt=""> <span>0</span></a>
-                        <!-- <div class="price">$0.00</div> -->
                     </div>
                 </div>
             </div>

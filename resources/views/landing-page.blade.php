@@ -9,6 +9,12 @@
     @section('cart')
         <div class="price">$0.00</div>
     @endsection
+
+    @section('page')
+        <li class="active"><a href="{{redirect('/')}}">Inicio</a></li>
+        <li><a href="{{route('shop.index')}}">Tienda</a></li>
+        <li><a href="{{redirect('/')}}">Páginas</a>
+    @endsection
     <!-- Hero Section Begin -->
     <section class="hero">
         <div class="hero__slider owl-carousel">

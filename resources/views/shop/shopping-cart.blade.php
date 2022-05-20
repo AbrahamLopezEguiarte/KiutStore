@@ -9,6 +9,11 @@
     @section('cart')
         <div class="price">{{$cart->price}}</div>
     @endsection
+    @section('page')
+        <li><a href="{{route('landingpage')}}">Inicio</a></li>
+        <li><a href="{{route('shop.index')}}">Tienda</a></li>
+        <li class="active"><a href="{{redirect('/')}}">Páginas</a>
+    @endsection
     <!-- Breadcrumb Section Begin -->
     <section class="breadcrumb-option">
         <div class="container">
