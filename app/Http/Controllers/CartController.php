@@ -120,22 +120,27 @@ class CartController extends Controller
      */
     public function update(Request $request, $item)
     {
+        
         $qty = $request->quantity;
         $cartItem = CartItem::find($item);
-    
         $cartItem->quantity = $qty;
+        if($qty > 0){
+            $product_price = $cartItem->product->price;
+            $item_price = $cartItem->price;
+            
+            $cartItem->price = $cartItem->quantity * $product_price;
+            
+            $cartItem->save();
 
-        $product_price = $cartItem->product->price;
-        $item_price = $cartItem->price;
-        
-        $cartItem->price = $cartItem->quantity * $product_price;
-        
-        $cartItem->save();
-
-        //Modificar precio del carrito
-        $cart = CartItem::find($cartItem->id)->cart;
-        $cart->price = $cart->price - $item_price  + $cartItem->price;
-        $cart->save();
+            //Modificar precio del carrito
+            $cart = CartItem::find($cartItem->id)->cart;
+            
+            $cart->price = $cart->price - $item_price  + $cartItem->price;
+            $cart->save();
+        }
+        else{
+            return $this->destroy($item);
+        }
 
         return redirect()->route('cart.index');
     }

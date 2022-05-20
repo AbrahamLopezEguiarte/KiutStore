@@ -167,17 +167,16 @@
                                     </td>
                                     <td class="quantity__item">
                                         <div class="quantity">
-                                            <div class="pro-qty-2">
                                                 <form id="modifyForm" action="{{ route('cart.update', $item) }}" method="POST">
                                                     @csrf
-                                                    @method('put')
-                                                    <input type="text" name="quantity" value="{{ $item->quantity }}">
+                                                    @method('PATCH')
+                                                    <div class="pro-qty-2">
+                                                        <input type="text" name="quantity" value="{{ $item->quantity }}">
+                                                    </div>
                                                     <button type="submit" class="btn btn-light"> Actualizar Carrito
                                                         <i class="fa fa-spinner"></i>
-                            
                                                     </button>
                                                 </form>                                                
-                                            </div>
                                         </div>
                                     </td>
                                     <!-- Agregar precio total del carro -->
