@@ -148,12 +148,17 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <script>
+                                    if ( window.history.replaceState ) {
+                                        window.history.replaceState( null, null, window.location.href );
+                                    }
+                                </script>
                                 @foreach($cartItems as $item)
                                 <tr>                                    
                                     <td class="product__cart__item">
                                         
                                         <div class="product__cart__item__pic">
-                                            <img src="{{$item->product->image}}" alt="">
+                                            <img src="{{$item->product->image}}" alt="" width="150" height="200">
                                         </div>
                                         <div class="product__cart__item__text">
                                             <h6>{{$item->product->name}}</h6>

@@ -16,12 +16,14 @@ class ProductFactory extends Factory
      */
     public function definition()
     {
+        $faker = \Faker\Factory::create();
+        $faker->addProvider(new \Smknstd\FakerPicsumImages\FakerPicsumImagesProvider($faker));
         return [
             'name'=>$this->faker->sentence(),
             'description'=>$this->faker->paragraph(),
-            'price'=>$this->faker->randomFloat(2, 0, 1),
+            'price'=>$this->faker->randomFloat(2, 0, 1000),
             'category'=>$this->faker->randomElement($array = ['Mochila', 'Pañalera']),
-            'image'=>$this->faker->image('public/img/product', 50, 50, null, false)
+            'image'=>$faker->imageUrl(150, 200)
         ];
     }
 }
