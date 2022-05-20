@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CrudController;
 use App\Http\Controllers\LandingPageController;
@@ -18,11 +19,11 @@ use App\Http\Controllers\ShoppingCartController;
 |
 */
 
-Route::get('/', 'App\Http\Controllers\LandingPageController@index')->middleware(['auth', 'verified'])->name('landingpage');
+Route::get('/', 'App\Http\Controllers\LandingPageController@index')->name('landingpage');
 
 Route::resource('cart', CartController::class)->middleware(['auth', 'verified']);
 
-Route::resource('shop', ShopController::class)->middleware(['auth', 'verified']);
+Route::resource('shop', ShopController::class);
 
 Route::post('productos/restore', [CrudController::class, 'restore'])->name('productos.restore');
 

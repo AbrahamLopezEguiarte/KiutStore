@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CartItem;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -58,9 +59,12 @@ class ShopController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show() //Originalmente se pasa la variable $id
     {
-        $product = Product::where('id', $id)->firstOrFail();
+        $product = CartItem::with(['Product', 'image'])->get();
+        /*
+        Línea original
+        $product = Product::where('id', $id)->firstOrFail();*/
 
         return view('shop.shop-details')->with([
             'product' => $product,
