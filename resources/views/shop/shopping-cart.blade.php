@@ -168,13 +168,27 @@
                                     <td class="quantity__item">
                                         <div class="quantity">
                                             <div class="pro-qty-2">
-                                                <input type="text" value="{{ $item->quantity }}">
+                                                <form id="modifyForm" action="{{ route('cart.update', $item) }}" method="POST">
+                                                    @csrf
+                                                    @method('put')
+                                                    <input type="text" name="quantity" value="{{ $item->quantity }}">
+                                                    <button type="submit" class="btn btn-light"> Actualizar Carrito
+                                                        <i class="fa fa-spinner"></i>
+                            
+                                                    </button>
+                                                </form>                                                
                                             </div>
                                         </div>
                                     </td>
                                     <!-- Agregar precio total del carro -->
-                                    <td class="cart__price">{{ $item->price }}</td>
-                                    <td class="cart__close"><i class="fa fa-close"></i></td>                                                                        
+                                    <td class="cart__price">{{ $item->price }}</td>                                    
+                                    <td class="cart__close"> 
+                                        <form action="{{ route('cart.destroy', $item) }}" method="POST">
+                                            @csrf
+                                            @method('delete')
+                                            <button class="btn btn-light" type="submit"><i class="fa fa-close"></i></button>
+                                        </form>                                                                          
+                                    </td>                                                                        
                                 </tr>
                                 @endforeach                                
                             </tbody>
@@ -185,14 +199,10 @@
                             <div class="continue__btn">
                                 <a href="{{route('shop.index')}}">Continuar Comprando</a>
                             </div>
-                        </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6">
-                            <div class="continue__btn update__btn">
-                                <a href="#"><i class="fa fa-spinner"></i> Update cart</a>
-                            </div>
-                        </div>
+                        </div>                        
                     </div>
                 </div>
+                <br>
                 <div class="col-lg-4">
                     <!-- <div class="cart__discount">
                         <h6>Discount codes</h6>
@@ -207,7 +217,7 @@
                             <li>Subtotal <span>{{ $cart->price }}</span></li>
                             <li>Total <span>{{ $cart->price }}</span></li>
                         </ul>
-                        <a href="#" class="primary-btn">Proceed to checkout</a>
+                        <a href="#" class="primary-btn">Pagar</a>
                     </div>
                 </div>
             </div>
